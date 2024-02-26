@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Layout } from 'antd'
-import AppCard from './components/Card/Card'
 import AppList from './components/AppList/AppList'
+import AppForm from './components/AppForm/AppForm'
 import api from './utils/api'
 import './App.css'
 
@@ -48,6 +48,7 @@ function App() {
   return (
     <Layout>
       <Layout.Header style={headerStyle}>Header</Layout.Header>
+      <AppForm />
       <Layout.Content style={contentStyle}>
         <AppList products={products} />
       </Layout.Content>

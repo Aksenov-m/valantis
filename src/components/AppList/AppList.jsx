@@ -14,13 +14,16 @@ const AppList = (props) => {
         xl: 3,
         xxl: 2,
       }}
-      dataSource={props.products}
+      dataSource={props.products.filter(
+        (item, index, array) =>
+          index === array.findIndex((elem) => elem.id === item.id),
+      )}
       renderItem={(product) => (
         <List.Item>
           <AppCard
             key={product.id}
             brand={!product.brand ? 'valantis' : product.brand}
-            price={product.price}
+            price={product.price + ' руб.'}
             product={product.product}
           />
         </List.Item>

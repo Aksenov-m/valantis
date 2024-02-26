@@ -33,10 +33,8 @@ export class Api {
       });
 
       const result = await response.json();
-     console.error(result);
       return onError(result);
     } catch (error) {
-      console.error(error);
       return Promise.reject(error);
     }
   }
@@ -63,7 +61,6 @@ export class Api {
       const result = await response.json();
       return onError(result);
     } catch (error) {
-      console.error(error);
       return Promise.reject(error);
     }
   }
