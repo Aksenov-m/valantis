@@ -1,33 +1,17 @@
 import React from 'react'
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from '@ant-design/icons'
-import { Avatar, Card } from 'antd'
 
-const AppCard = () => (
-  <Card
-    style={{
-      width: 300,
-    }}
-    cover={
-      <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-      />
-    }
-    actions={[
-      <SettingOutlined key="setting" />,
-      <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
-    ]}
-  >
-    <Card.Meta
-      avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-      title="Card title"
-      description="This is the description"
-    />
-  </Card>
+import { Card, Space } from 'antd'
+const AppCard = (props) => (
+  <Space direction="vertical" size={16}>
+    <Card
+      title={props.product}
+      style={{
+        width: 300,
+      }}
+    >
+      <p>{props.brand}</p>
+      <p>{props.price}</p>
+    </Card>
+  </Space>
 )
 export default AppCard

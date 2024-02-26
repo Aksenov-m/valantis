@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Layout } from 'antd'
 import AppCard from './components/Card/Card'
+import AppList from './components/AppList/AppList'
 import api from './utils/api'
 import './App.css'
 
@@ -27,17 +28,19 @@ function App() {
     backgroundColor: '#4096ff',
   }
 
+  const [products, setProducts] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
     api
       .get_ids()
       .then((data) => {
-        console.log('IDs data:', data)
         // Получение только ID товаров из данных idsData
         const ids = data
         return api.get_items(ids)
       })
       .then((itemsData) => {
-        console.log('Items data:', itemsData)
+        setProducts(itemsData)
       })
       .catch((error) => console.log(error))
   }, [])
@@ -46,9 +49,9 @@ function App() {
     <Layout>
       <Layout.Header style={headerStyle}>Header</Layout.Header>
       <Layout.Content style={contentStyle}>
-        <AppCard />
+        <AppList products={products} />
       </Layout.Content>
-      <Layout.Footer style={footerStyle}>Footer</Layout.Footer>
+      <Layout.Footer products={products}>Footer</Layout.Footer>
     </Layout>
   )
 }
