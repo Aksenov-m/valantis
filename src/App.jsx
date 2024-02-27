@@ -29,8 +29,10 @@ function App() {
   }
 
   const [products, setProducts] = useState([])
+  const [filterText, setFilterText] = useState('')
+  const [select, setSelect] = useState('price')
   const [isLoading, setIsLoading] = useState(false)
-
+  console.log(select)
   useEffect(() => {
     api
       .get_ids()
@@ -45,12 +47,22 @@ function App() {
       .catch((error) => console.log(error))
   }, [])
 
+  // function handleSelect(e) {
+  //   setSelect(e.target.value)
+  // }
+
   return (
     <Layout>
       <Layout.Header style={headerStyle}>Header</Layout.Header>
-      <AppForm />
+      <AppForm
+        select={select}
+        handleSelect={setSelect}
+        filterText={filterText}
+        onFilterTextChange={setFilterText}
+      />
       <Layout.Content style={contentStyle}>
-        <AppList products={products} />
+        <h1>{filterText}</h1>
+        <AppList products={products} filterText={filterText} select={select} />
       </Layout.Content>
       <Layout.Footer products={products}>Footer</Layout.Footer>
     </Layout>

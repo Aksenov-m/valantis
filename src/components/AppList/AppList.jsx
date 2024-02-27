@@ -3,6 +3,27 @@ import AppCard from '../Card/Card'
 import { List } from 'antd'
 
 const AppList = (props) => {
+  console.log(props.select)
+  const filteredProducts = props.products
+    .filter(
+      (item, index, array) =>
+        index === array.findIndex((elem) => elem.id === item.id),
+    )
+    .filter((article) => {
+      const searchString = props.filterText.toLowerCase()
+      const { product, price, brand } = article
+      switch (props.select) {
+        case 'name':
+          return product && product.toLowerCase().includes(searchString)
+        case 'price':
+          return price && price.toString().toLowerCase().includes(searchString)
+        case 'brand':
+          return brand && brand.toLowerCase().includes(searchString)
+        default:
+          return true
+      }
+    })
+
   return (
     <List
       grid={{
@@ -14,17 +35,14 @@ const AppList = (props) => {
         xl: 3,
         xxl: 2,
       }}
-      dataSource={props.products.filter(
-        (item, index, array) =>
-          index === array.findIndex((elem) => elem.id === item.id),
-      )}
-      renderItem={(product) => (
+      dataSource={filteredProducts}
+      renderItem={(article) => (
         <List.Item>
           <AppCard
-            key={product.id}
-            brand={!product.brand ? 'valantis' : product.brand}
-            price={product.price + ' руб.'}
-            product={product.product}
+            key={article.id}
+            brand={!article.brand ? 'valantis' : article.brand}
+            price={article.price + ' руб.'}
+            product={article.product}
           />
         </List.Item>
       )}
