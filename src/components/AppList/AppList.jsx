@@ -40,6 +40,7 @@ const AppList = (props) => {
         <List.Item>
           <AppCard
             key={article.id}
+            id={article.id}
             brand={!article.brand ? 'valantis' : article.brand}
             price={article.price + ' руб.'}
             product={article.product}

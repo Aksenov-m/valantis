@@ -13,7 +13,7 @@ export class Api {
     this._password = options.password;
   }
 
-  async get_ids(offset = 0, limit = 100) {
+  async get_ids(offset , limit) {
     const method = "get_ids";
     const apiKey = this.generateAuthString();
 

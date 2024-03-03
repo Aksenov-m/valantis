@@ -1,8 +1,26 @@
-# React + Vite
+# .ru
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Описание: 
+Тестовое задание для компании Sycret.ru. Веб сервис для онлайн продажи подарочных сертификатов на REST API.
+Приложение написано на популярном фреймворке REACT.
+### Технологический стек
+* :point_right: React
+* :point_right: React-router-dom
+* :point_right: HTML
+* :point_right: CSS
+##### версия языка: :ru:
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Запускает приложение в режиме разработки
+
+```sh
+npm run start
+Откройте http://localhost:3000/dimax , чтобы просмотреть его в браузере.
+```
+
+### Сборка приложения
+
+```sh
+npm run build
+```
+* [Ссылка на сайт](https://aksenov-m.github.io/dimax/)

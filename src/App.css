@@ -5,3 +5,10 @@
   text-align: center;
   box-sizing: border-box;
 }
+
+.AppArrowButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

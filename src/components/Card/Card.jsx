@@ -9,6 +9,7 @@ const AppCard = (props) => (
         width: 300,
       }}
     >
+      <p>{props.id}</p>
       <p>{props.brand}</p>
       <p>{props.price}</p>
     </Card>
