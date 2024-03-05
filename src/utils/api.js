@@ -65,6 +65,32 @@ export class Api {
     }
   }
 
+  async filter(select, text) {
+    const method = "filter";
+    const apiKey = this.generateAuthString();
+
+    const url = `${this._url}`;
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth": apiKey
+        },
+        body: JSON.stringify({
+          action: method,
+          params: { [select]: select === 'price' ? Number(text) : text}
+        })
+      });
+
+      const result = await response.json();
+      return onError(result);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
   // Функция для генерации авторизационной строки
   generateAuthString() {
     const timestamp = new Date().toISOString().split('T')[0].replace(/-/g, ''); // Текущая дата в формате YYYYMMDD

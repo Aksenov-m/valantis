@@ -37,13 +37,25 @@ function App() {
   const [disabledArrowLeft, setDisabledArrowLeft] = useState(true)
   const [disabledArrowRight, setDisabledArrowRight] = useState(false)
   const [page, setPage] = useState(0)
-  const [pageQty, setPageQty] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  console.log(select)
+  const [pageQty, setPageQty] = useState(0)
   const OFFSET = 51
   const LIMIT = 50
 
+  function setArrowAvailability(products, page) {
+    if (!products) {
+      setDisabledArrowRight(true)
+    }
+
+    if (page !== 0) {
+      setDisabledArrowLeft(false)
+    } else {
+      setDisabledArrowLeft(true)
+    }
+  }
+
   useEffect(() => {
+    setIsLoading(true)
     api
       .get_ids(OFFSET * page, LIMIT)
       .then((data) => {
@@ -54,12 +66,11 @@ function App() {
       .then((itemsData) => {
         setProducts(itemsData)
       })
-      .catch((error) => console.log(error)).finally
-    if (page !== 0) {
-      setDisabledArrowLeft(false)
-    } else {
-      setDisabledArrowLeft(true)
-    }
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setArrowAvailability(products, page)
+        setIsLoading(false)
+      })
   }, [page])
 
   // function handleSelect(e) {
@@ -76,17 +87,37 @@ function App() {
     console.log(page + ' +')
   }
 
+  const handleChange = (event) => {
+    setFilterText(event.target.value)
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault() // Предотвращаем стандартное поведение отправки формы (перезагрузку страницы)
+    setIsLoading(true)
+    api
+      .filter(select, filterText)
+      .then((data) => {
+        // Получение только ID товаров из данных idsData
+        const ids = data
+        return api.get_items(ids)
+      })
+      .then((itemsData) => {
+        setProducts(itemsData)
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setArrowAvailability(products, page)
+        setIsLoading(false)
+      })
+  }
+
   const router = createBrowserRouter([
     {
       path: '/',
       element: (
         <Layout.Content style={contentStyle}>
-          <h1>{filterText}</h1>
-          <AppList
-            products={products}
-            filterText={filterText}
-            select={select}
-          />
+          {/* <h1>{filterText}</h1> */}
+          <AppList products={products} isLoading={isLoading} />
         </Layout.Content>
       ),
       errorElement: <ErrorPage />,
@@ -105,7 +136,8 @@ function App() {
         select={select}
         handleSelect={setSelect}
         filterText={filterText}
-        onFilterTextChange={setFilterText}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
       />
       <div className="AppArrowButton">
         <ArrowButton

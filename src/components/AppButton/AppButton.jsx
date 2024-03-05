@@ -1,9 +1,9 @@
 import React from 'react'
 import './AppButton.css' // Assuming you have a CSS file for button styles
 
-const AppButton = ({ onClick, children }) => {
+const AppButton = ({ children }) => {
   return (
-    <button className="custom-button" onClick={onClick}>
+    <button className="custom-button" type="submit">
       {children}
     </button>
   )

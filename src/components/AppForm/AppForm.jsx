@@ -6,10 +6,10 @@ import AppButton from '../AppButton/AppButton'
 
 const AppForm = (props) => {
   return (
-    <form id="valantis">
+    <form id="valantis" onSubmit={props.handleSubmit}>
       <AppInput
         filterText={props.filterText}
-        onFilterTextChange={props.onFilterTextChange}
+        handleChange={props.handleChange}
       />
       <AppSelect select={props.select} handleSelect={props.handleSelect} />
       <AppButton>Найти</AppButton>

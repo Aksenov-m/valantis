@@ -6,7 +6,8 @@ const AppInput = (props) => (
     className="input"
     type="text"
     placeholder="Найти..."
-    onChange={(e) => props.onFilterTextChange(e.target.value)}
+    value={props.filterText}
+    onChange={props.handleChange}
   />
 )
 export default AppInput
