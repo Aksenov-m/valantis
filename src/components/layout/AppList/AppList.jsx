@@ -1,9 +1,19 @@
 import React from 'react'
-import AppCard from '../Card/Card'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import AppCard from '../../Card/Card'
 import { List } from 'antd'
-import Preloader from '../Preloader/Preloader'
+import Preloader from '../../Preloader/Preloader'
 
 const AppList = (props) => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (props.search) {
+      navigate('/NotFound')
+    }
+  }, [props.search])
+
   const filteredProducts = props.products.filter(
     (item, index, array) =>
       index === array.findIndex((elem) => elem.id === item.id),

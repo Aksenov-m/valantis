@@ -5,14 +5,15 @@ import AppSelect from '../AppSelect/AppSelect'
 import AppButton from '../AppButton/AppButton'
 
 const AppForm = (props) => {
+  const isButtonDisabled = props.filterText === ''
   return (
-    <form id="valantis" onSubmit={props.handleSubmit}>
+    <form className="form" id="valantis" onSubmit={props.handleSubmit}>
       <AppInput
         filterText={props.filterText}
         handleChange={props.handleChange}
       />
       <AppSelect select={props.select} handleSelect={props.handleSelect} />
-      <AppButton>Найти</AppButton>
+      <AppButton isDisabled={isButtonDisabled}>Найти</AppButton>
     </form>
   )
 }

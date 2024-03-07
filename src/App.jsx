@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react'
-import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+  redirect,
+} from 'react-router-dom'
 import { Layout } from 'antd'
-import ErrorPage from './components/ErrorPage/ErrorPage'
-import AppList from './components/AppList/AppList'
+import ErrorPage from './components/layout/ErrorPage/ErrorPage'
+import AppList from './components/layout/AppList/AppList'
+import NotFound from './components/layout/NotFound/NotFound'
 import AppForm from './components/AppForm/AppForm'
 import ArrowButton from './components/ArrowButton/ArrowButton'
 import api from './utils/api'
@@ -38,7 +44,7 @@ function App() {
   const [disabledArrowRight, setDisabledArrowRight] = useState(false)
   const [page, setPage] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  const [pageQty, setPageQty] = useState(0)
+  const [search, setSearch] = useState(false)
   const OFFSET = 51
   const LIMIT = 50
 
@@ -52,6 +58,14 @@ function App() {
     } else {
       setDisabledArrowLeft(true)
     }
+  }
+
+  function handleNavigateBack() {
+    setSearch(false)
+
+    setTimeout(() => {
+      setDisabledArrowRight(false)
+    }, 5000) //  (5 секунда)
   }
 
   useEffect(() => {
@@ -71,11 +85,7 @@ function App() {
         setArrowAvailability(products, page)
         setIsLoading(false)
       })
-  }, [page])
-
-  // function handleSelect(e) {
-  //   setSelect(e.target.value)
-  // }
+  }, [page, search])
 
   const handleClickBack = () => {
     setPage((prevPage) => prevPage - 1)
@@ -94,20 +104,31 @@ function App() {
   function handleSubmit(event) {
     event.preventDefault() // Предотвращаем стандартное поведение отправки формы (перезагрузку страницы)
     setIsLoading(true)
+    setDisabledArrowRight(true)
     api
       .filter(select, filterText)
       .then((data) => {
+        if (data.length === 0) {
+          setProducts([])
+          setDisabledArrowRight(true)
+          return setSearch(true)
+        } else {
+          const ids = data
+          return api.get_items(ids)
+        }
         // Получение только ID товаров из данных idsData
-        const ids = data
-        return api.get_items(ids)
       })
       .then((itemsData) => {
-        setProducts(itemsData)
+        if (itemsData.length > 0) {
+          setProducts(itemsData)
+        }
+        return
       })
       .catch((error) => console.log(error))
       .finally(() => {
         setArrowAvailability(products, page)
         setIsLoading(false)
+        setFilterText('')
       })
   }
 
@@ -116,17 +137,15 @@ function App() {
       path: '/',
       element: (
         <Layout.Content style={contentStyle}>
-          {/* <h1>{filterText}</h1> */}
-          <AppList products={products} isLoading={isLoading} />
+          <AppList products={products} isLoading={isLoading} search={search} />
         </Layout.Content>
       ),
       errorElement: <ErrorPage />,
     },
-    // {
-    //   path: "dimax/form",
-    //   action: saveCertificateAction,
-    //   element: <FormPage certificate={certificate} errorMessage='Поля: Имя, Телефон, Почта - обязательные' />,
-    // },
+    {
+      path: 'NotFound',
+      element: <NotFound handleNavigateBack={handleNavigateBack} />,
+    },
   ])
 
   return (

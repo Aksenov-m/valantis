@@ -1,9 +1,10 @@
 import React from 'react'
-import './AppButton.css' // Assuming you have a CSS file for button styles
+import { Link } from 'react-router-dom'
+import './AppButton.css'
 
-const AppButton = ({ children }) => {
+const AppButton = ({ children, isDisabled }) => {
   return (
-    <button className="custom-button" type="submit">
+    <button disabled={isDisabled} className="custom-button" type="submit">
       {children}
     </button>
   )
