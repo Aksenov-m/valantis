@@ -149,29 +149,31 @@ function App() {
   ])
 
   return (
-    <Layout>
-      <Layout.Header style={headerStyle}>Header</Layout.Header>
-      <AppForm
-        select={select}
-        handleSelect={setSelect}
-        filterText={filterText}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-      />
-      <div className="AppArrowButton">
-        <ArrowButton
-          direction={'left'}
-          isDisabled={disabledArrowLeft}
-          onClick={handleClickBack}
-        ></ArrowButton>
-        <ArrowButton
-          isDisabled={disabledArrowRight}
-          onClick={handleClickNext}
-        ></ArrowButton>
-      </div>
-      <RouterProvider router={router} />
-      <Layout.Footer products={products}>Footer</Layout.Footer>
-    </Layout>
+    <main className="main">
+      <Layout>
+        <Layout.Header style={headerStyle}>Header</Layout.Header>
+        <AppForm
+          select={select}
+          handleSelect={setSelect}
+          filterText={filterText}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+        <div className="AppArrowButton">
+          <ArrowButton
+            direction={'left'}
+            isDisabled={disabledArrowLeft}
+            onClick={handleClickBack}
+          ></ArrowButton>
+          <ArrowButton
+            isDisabled={disabledArrowRight}
+            onClick={handleClickNext}
+          ></ArrowButton>
+        </div>
+        <RouterProvider router={router} />
+        <Layout.Footer>Footer</Layout.Footer>
+      </Layout>
+    </main>
   )
 }
 
