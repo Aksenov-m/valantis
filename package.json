@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "http://api.valantis.store:40000/",
+  "homepage": "https://aksenov-m.github.io/valantis/",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",

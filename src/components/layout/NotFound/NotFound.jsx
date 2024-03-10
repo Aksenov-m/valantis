@@ -11,7 +11,7 @@ const NotFound = (props) => {
     <div className={styles.container}>
       <p className={styles.description}>Ничего не найдено</p>
       <p className={styles.link}>
-        <Link onClick={onClickBack} to="/">
+        <Link onClick={onClickBack} to="/valantis">
           На главную
         </Link>
       </p>

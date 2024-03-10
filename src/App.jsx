@@ -41,7 +41,7 @@ function App() {
   const [filterText, setFilterText] = useState('')
   const [select, setSelect] = useState('price')
   const [disabledArrowLeft, setDisabledArrowLeft] = useState(true)
-  const [disabledArrowRight, setDisabledArrowRight] = useState(false)
+  const [disabledArrowRight, setDisabledArrowRight] = useState(true)
   const [page, setPage] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [search, setSearch] = useState(false)
@@ -79,6 +79,7 @@ function App() {
       })
       .then((itemsData) => {
         setProducts(itemsData)
+        setDisabledArrowRight(false)
       })
       .catch((error) => console.log(error))
       .finally(() => {
@@ -134,7 +135,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: '/valantis',
       element: (
         <Layout.Content style={contentStyle}>
           <AppList products={products} isLoading={isLoading} search={search} />
@@ -149,9 +150,9 @@ function App() {
   ])
 
   return (
-    <main className="main">
-      <Layout>
-        <Layout.Header style={headerStyle}>Header</Layout.Header>
+    <Layout>
+      <Layout.Header style={headerStyle}>Header</Layout.Header>
+      <div className="content">
         <AppForm
           select={select}
           handleSelect={setSelect}
@@ -171,9 +172,9 @@ function App() {
           ></ArrowButton>
         </div>
         <RouterProvider router={router} />
-        <Layout.Footer>Footer</Layout.Footer>
-      </Layout>
-    </main>
+      </div>
+      <Layout.Footer>Footer</Layout.Footer>
+    </Layout>
   )
 }
 
